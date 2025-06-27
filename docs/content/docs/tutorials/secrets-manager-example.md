@@ -58,7 +58,7 @@ value of `secretsmanager` for `SERVICE`.
 
 ### Create Kubernetes Secret
 
-Now that the ACK secretsmanager-controller is setup we'll need to create a Kubernetes Secret to store our sensitive data. 
+Now that the ACK secretsmanager-controller is setup we'll need to create a Kubernetes Secret. 
 
 ```bash
 cat <<EOF > secret.yaml
@@ -96,14 +96,22 @@ spec:
 EOF
 ```
 
+```bash
+kubectl apply -f aws-secret.yaml
+```
+
+You can verify that the secret was created with the aws cli.
+
+```bash
+aws secretsmanager describe-secret sample-aws-secret
+```
+
+### Cleanup
 You can delete your AWS and k8s Secrets using the `kubectl delete` command:
 
 ```bash
 kubectl delete -f secret.yaml && kubectl delete -f aws-secret.yaml
 ```
-
-### Cleanup
-You can delete the AWS Secret
 
 To remove the Secrets Manager ACK service controller, related CRDs, and namespaces, see [ACK Cleanup][cleanup].
 
